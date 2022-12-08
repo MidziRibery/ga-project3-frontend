@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ComfortTube from '../img/YT Logo.jpg';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Container = styled.div`
     flex:1;
@@ -25,6 +26,13 @@ const Img = styled.img`
     height: 25px;
 `
 
+const Item = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+`
+
 export const Menu = () => {
   return (
     <Container>
@@ -33,6 +41,10 @@ export const Menu = () => {
                 <Img src={ComfortTube}/>
                 ComfortTube
             </Logo>
+            <Item>
+                <HomeIcon/>
+                Home
+            </Item>
         </Wrapper>
     </Container>
   )
