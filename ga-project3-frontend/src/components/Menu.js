@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ComfortTube from '../img/YT Logo.jpg';
 import HomeIcon from '@mui/icons-material/Home';
+import { style } from '@mui/system';
 
 const Container = styled.div`
     flex:1;
@@ -33,6 +34,11 @@ const Item = styled.div`
     cursor: pointer;
 `
 
+const HR = styled.hr`
+    margin: 15px 0px;
+    border: 0.5px solid black;
+`
+
 export const Menu = () => {
   return (
     <Container>
@@ -45,6 +51,7 @@ export const Menu = () => {
                 <HomeIcon/>
                 Home
             </Item>
+            <Hr/>
         </Wrapper>
     </Container>
   )
