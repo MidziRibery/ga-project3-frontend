@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
+  
 `
 const Main = styled.div`
   flex: 7;
@@ -21,7 +22,7 @@ function App() {
       <Main>
         <Navbar/>
         <Wrapper>
-          video cards
+          <h1>test</h1>
         </Wrapper>
       </Main>
     </Container>

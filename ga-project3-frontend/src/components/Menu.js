@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ComfortTube from '../img/YT Logo.jpg';
 import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { style } from '@mui/system';
 
 const Container = styled.div`
@@ -10,6 +11,8 @@ const Container = styled.div`
     height: 100vh;
     color: white;
     font-size: 14px;
+    postion: sticky;
+    top: 0;
 `
 
 const Wrapper = styled.div`
@@ -32,11 +35,28 @@ const Item = styled.div`
     align-items: center;
     gap: 20px;
     cursor: pointer;
+    padding: 7.5pc 0px;
+`;
+
+const Hr = styled.hr`
+    margin: 15px 0px;
+    border: 0.5px solid white;
 `
 
-const HR = styled.hr`
-    margin: 15px 0px;
-    border: 0.5px solid black;
+const Login = styled.div``
+const Button = styled.button`
+    padding: 5px 15px;
+    background-color: transparent;
+    border: 1px solid blue;
+    color: blue;
+    border-radius: 3px;
+    font-weight: 500;
+    margin-top: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
 `
 
 export const Menu = () => {
@@ -51,6 +71,11 @@ export const Menu = () => {
                 <HomeIcon/>
                 Home
             </Item>
+            <Hr/>
+            <Login>
+                Sign in to like videos, comment, and subscribe.
+            </Login>
+            <Button><AccountCircleOutlinedIcon/> Sign In</Button>
             <Hr/>
         </Wrapper>
     </Container>
