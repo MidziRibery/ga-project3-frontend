@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ComfortTube from '../img/YT Logo.jpg';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { Link } from 'react-router-dom';
 import { style } from '@mui/system';
 
 const Container = styled.div`
@@ -63,10 +64,12 @@ export const Menu = () => {
   return (
     <Container>
         <Wrapper>
+        <Link to='/' style={{textDecoration:'none', color:'inherit'}}>
             <Logo>
                 <Img src={ComfortTube}/>
                 ComfortTube
             </Logo>
+        </Link>
             <Item>
                 <HomeIcon/>
                 Home
