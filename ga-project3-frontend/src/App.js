@@ -8,11 +8,13 @@ import styled from 'styled-components';
 import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
-  RouterProvider,
+  Routes,
   Route,
   Link,
   BrowserRouter,
 } from "react-router-dom";
+import Home from './pages/Home';
+import Video from './pages/Video';
 
 const Container = styled.div`
   display: flex;
@@ -23,6 +25,7 @@ const Main = styled.div`
 `;
 const Wrapper = styled.div``;
 
+
 function App() {
   return (
     <Container>
@@ -31,11 +34,14 @@ function App() {
         <Main>
           <Navbar/>
           <Wrapper>
-            <RouterProvider>
+            <Routes>
               <Route path='/'>
-                  <Route index/>
+                  <Route index element={<Home/>}/>
+                  <Route path='video'>
+                    <Route path=':id' element={<Video/>}/>
+                  </Route>
               </Route>
-            </RouterProvider>
+            </Routes>
           </Wrapper>
         </Main>
       </BrowserRouter>

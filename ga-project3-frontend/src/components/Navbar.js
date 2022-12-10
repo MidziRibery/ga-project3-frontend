@@ -5,7 +5,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 const Container = styled.div `
   postion: sticky;
   top: 0;
-  background-color: grey;
+  background-color: black;
   height: 56px;
 `;
 const Wrapper = styled.div `
