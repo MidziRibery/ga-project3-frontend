@@ -44,6 +44,7 @@ const Hr = styled.hr`
 `
 
 const Login = styled.div``
+
 const Button = styled.button`
     padding: 5px 15px;
     background-color: transparent;
@@ -56,7 +57,6 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     gap: 5px;
-
 `
 
 export const Menu = () => {
