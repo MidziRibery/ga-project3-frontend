@@ -5,6 +5,14 @@ import Menu from './components/Menu';
 import { Navbar } from './components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
+import { createRoot } from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -18,13 +26,19 @@ const Wrapper = styled.div``;
 function App() {
   return (
     <Container>
-      <Menu/>
-      <Main>
-        <Navbar/>
-        <Wrapper>
-          <h1>test</h1>
-        </Wrapper>
-      </Main>
+      <BrowserRouter>
+        <Menu/>
+        <Main>
+          <Navbar/>
+          <Wrapper>
+            <RouterProvider>
+              <Route path='/'>
+                  <Route index/>
+              </Route>
+            </RouterProvider>
+          </Wrapper>
+        </Main>
+      </BrowserRouter>
     </Container>
   );
 }
