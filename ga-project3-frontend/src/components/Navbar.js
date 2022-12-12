@@ -35,6 +35,7 @@ export const Navbar = () => {
   return (
     <Container>
       <Wrapper>
+        <Button>Register</Button>
         <Button><AccountCircleOutlinedIcon/> Sign In</Button>
       </Wrapper>
     </Container>

@@ -4,6 +4,7 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
 import Comments from '../components/Comments';
 import Card from '../components/Card';
 
@@ -107,8 +108,8 @@ const Video = () => {
             <VideoWrapper>
                 <iframe
                 width='100%'
-                hetigh='720'
-                src='https://www.youtube.com/watch?v=yIaXoop8gl4&t=23s'
+                height='360'
+                src='https://www.shutterstock.com/shutterstock/videos/1063674022/preview/stock-footage-back-of-little-boy-child-in-helmet-aviator-cosmonaut-running-with-toy-rocket-in-sunset-field-summer.webm'
                 title='YouTube Video Player'
                 frameBorder='0'
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
@@ -130,6 +131,9 @@ const Video = () => {
                 </Button>
                 <Button>
                     <AddTaskOutlinedIcon/> Save
+                </Button>
+                <Button>
+                    <SkipNextIcon/> Next Video
                 </Button>
             </Buttons>
             </Details>
