@@ -9,11 +9,11 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Wrapper = styled.div`
+
+const Form = styled.form`
+  width: 420px;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  padding: 20px 50px;
   gap: 10px;
 `;
 
@@ -42,7 +42,7 @@ const Button = styled.button`
   padding: 10px 20px;
   font-weight: 500;
   cursor: pointer;
-  background-color: light-grey;
+  background-color: #dee2e6;
 `;
 
 const SignIn = () => {
@@ -166,41 +166,39 @@ const SignIn = () => {
 
   return (
     <Container>
-      <Wrapper>
-        <Title>Sign in</Title>
-        <SubTitle>to continue to ComfortTube</SubTitle>
-        <ErrorMessage>{loginErrorMessage}</ErrorMessage>
-        <form onSubmit={handleLogin}>
-          {loginInputs.map((input) => (
+      <Title>Sign in</Title>
+      <SubTitle>to continue to ComfortTube</SubTitle>
+      <ErrorMessage>{loginErrorMessage}</ErrorMessage>
+      <Form onSubmit={handleLogin}>
+        {loginInputs.map((input) => (
+          <FormInput
+            key={input.id}
+            {...input}
+            value={loginValues[input.name]}
+            onChange={onLoginChange}
+          />
+        ))}
+        <Button>Sign in</Button>
+      </Form>
+
+      <Title>or</Title>
+      <ErrorMessage>{registerErrorMessage}</ErrorMessage>
+      {registrationSuccessMessage === "" ? (
+        <Form onSubmit={handleRegister}>
+          {registerInputs.map((input) => (
             <FormInput
               key={input.id}
               {...input}
-              value={loginValues[input.name]}
-              onChange={onLoginChange}
+              value={registerValues[input.name]}
+              onChange={onRegisterChange}
             />
           ))}
-          <Button>Sign in</Button>
-        </form>
-
-        <Title>or</Title>
-        <ErrorMessage>{registerErrorMessage}</ErrorMessage>
-        {registrationSuccessMessage === "" ? (
-          <form onSubmit={handleRegister}>
-            {registerInputs.map((input) => (
-              <FormInput
-                key={input.id}
-                {...input}
-                value={registerValues[input.name]}
-                onChange={onRegisterChange}
-              />
-            ))}
-            <Button>Sign up</Button>
-          </form>
-        ) : (
-          ""
-        )}
-        <SuccessMessage>{registrationSuccessMessage}</SuccessMessage>
-      </Wrapper>
+          <Button>Sign up</Button>
+        </Form>
+      ) : (
+        ""
+      )}
+      <SuccessMessage>{registrationSuccessMessage}</SuccessMessage>
     </Container>
   );
 };
