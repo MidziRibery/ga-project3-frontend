@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import FormInput from "../components/FormInput";
 import styled from "styled-components";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginSuccess, loginStart, loginFailure } from "../redux/userSlice";
 
 const Container = styled.div`
   display: flex;
@@ -50,6 +52,8 @@ const SignIn = () => {
   const [registerErrorMessage, setRegisterErrorMessage] = useState("");
   const [registrationSuccessMessage, setRegistrationSuccessMessage] =
     useState("");
+
+  const dispatch = useDispatch();
 
   const [loginValues, setLoginValues] = useState({
     email: "",
@@ -128,12 +132,14 @@ const SignIn = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    dispatch(loginStart());
     try {
       const res = await axios.post(
         "https://odd-rose-lobster-hem.cyclic.app/api/auth/signin/",
         loginValues
       );
       console.log(res.data);
+      dispatch(loginSuccess(res.data));
     } catch (err) {
       console.log(err.response.data);
       setLoginErrorMessage(err.response.data.message);
