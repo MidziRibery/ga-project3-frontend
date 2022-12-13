@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FormInput from "../components/FormInput";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -31,12 +32,8 @@ const ErrorMessage = styled.p`
   align-self: start;
 `;
 
-const Input = styled.input`
-  border: 1px solid black;
-  border-radius: 3px;
-  padding: 10px;
-  background-color: transparent;
-  width: 100%;
+const SuccessMessage = styled.p`
+  color: green;
 `;
 
 const Button = styled.button`
@@ -49,21 +46,92 @@ const Button = styled.button`
 `;
 
 const SignIn = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const [registerErrorMessage, setRegisterErrorMessage] = useState("");
+  const [registrationSuccessMessage, setRegistrationSuccessMessage] =
+    useState("");
+
+  const [loginValues, setLoginValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [registerValues, setRegisterValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const onLoginChange = (e) => {
+    setLoginValues({ ...loginValues, [e.target.name]: e.target.value });
+  };
+  const onRegisterChange = (e) => {
+    setRegisterValues({ ...registerValues, [e.target.name]: e.target.value });
+  };
+
+  const loginInputs = [
+    {
+      id: 1,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      required: true,
+    },
+  ];
+
+  const registerInputs = [
+    {
+      id: 1,
+      name: "name",
+      type: "text",
+      placeholder: "Username",
+      errorMessage:
+        "Username should be 3-16 characters and shouldn't include any special character!",
+      pattern: "^[A-Za-z0-9]{3,16}$",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      errorMessage: "It should be a valid email address!",
+      required: true,
+    },
+    {
+      id: 3,
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      errorMessage: "Password should be 6-20 characters",
+      pattern: "^[a-zA-Z0-9!@#$%^&*]{6,20}$",
+      required: true,
+    },
+    {
+      id: 4,
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "Re-enter Password",
+      errorMessage: "Passwords don't match!",
+      pattern: registerValues.password,
+      required: true,
+    },
+  ];
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
         "https://odd-rose-lobster-hem.cyclic.app/api/auth/signin/",
-        {
-          email,
-          password,
-        }
+        loginValues
       );
       console.log(res.data);
     } catch (err) {
@@ -72,10 +140,29 @@ const SignIn = () => {
     }
   };
 
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const { confirmPassword, ...newUser } = registerValues;
+    // console.log(newUser);
+    try {
+      const res = await axios.post(
+        "https://odd-rose-lobster-hem.cyclic.app/api/auth/signup/",
+        newUser
+      );
+      setRegistrationSuccessMessage(
+        `${res.data} You can now log into your account!`
+      );
+      //   console.log(res.data);
+    } catch (err) {
+      console.log(err.response.data);
+      setRegisterErrorMessage(err.response.data.message);
+    }
+  };
+
   useEffect(() => {
     setLoginErrorMessage("");
     setRegisterErrorMessage("");
-  }, [name, email, password]);
+  }, [loginValues, registerValues]);
 
   return (
     <Container>
@@ -83,37 +170,36 @@ const SignIn = () => {
         <Title>Sign in</Title>
         <SubTitle>to continue to ComfortTube</SubTitle>
         <ErrorMessage>{loginErrorMessage}</ErrorMessage>
-        <Input
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <Input
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <Button onClick={handleLogin}>Sign in</Button>
+        <form onSubmit={handleLogin}>
+          {loginInputs.map((input) => (
+            <FormInput
+              key={input.id}
+              {...input}
+              value={loginValues[input.name]}
+              onChange={onLoginChange}
+            />
+          ))}
+          <Button>Sign in</Button>
+        </form>
+
         <Title>or</Title>
         <ErrorMessage>{registerErrorMessage}</ErrorMessage>
-        <Input
-          placeholder="username"
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <Input
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <Input
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="password"
-          required
-        />
-        <Button>Sign up</Button>
+        {registrationSuccessMessage === "" ? (
+          <form onSubmit={handleRegister}>
+            {registerInputs.map((input) => (
+              <FormInput
+                key={input.id}
+                {...input}
+                value={registerValues[input.name]}
+                onChange={onRegisterChange}
+              />
+            ))}
+            <Button>Sign up</Button>
+          </form>
+        ) : (
+          ""
+        )}
+        <SuccessMessage>{registrationSuccessMessage}</SuccessMessage>
       </Wrapper>
     </Container>
   );
