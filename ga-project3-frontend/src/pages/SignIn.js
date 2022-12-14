@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import styled from "styled-components";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { loginSuccess, loginStart, loginFailure } from "../redux/userSlice";
+import { loginSuccess, loginStart } from "../redux/userSlice";
+
+const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
 
 const Container = styled.div`
   display: flex;
@@ -31,7 +34,6 @@ const SubTitle = styled.h2`
 const ErrorMessage = styled.p`
   color: red;
   margin-bottom: 0;
-  align-self: start;
 `;
 
 const SuccessMessage = styled.p`
@@ -54,6 +56,7 @@ const SignIn = () => {
     useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loginValues, setLoginValues] = useState({
     email: "",
@@ -134,12 +137,12 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post(
-        "https://odd-rose-lobster-hem.cyclic.app/api/auth/signin/",
-        loginValues
-      );
+      const res = await axios.post(`${API_URL}auth/signin/`, loginValues);
       console.log(res.data);
-      dispatch(loginSuccess(res.data));
+      if (res.data) {
+        dispatch(loginSuccess(res.data));
+        navigate("/video/test");
+      }
     } catch (err) {
       console.log(err.response.data);
       setLoginErrorMessage(err.response.data.message);
@@ -151,10 +154,7 @@ const SignIn = () => {
     const { confirmPassword, ...newUser } = registerValues;
     // console.log(newUser);
     try {
-      const res = await axios.post(
-        "https://odd-rose-lobster-hem.cyclic.app/api/auth/signup/",
-        newUser
-      );
+      const res = await axios.post(`${API_URL}auth/signup/`, newUser);
       setRegistrationSuccessMessage(
         `${res.data} You can now log into your account!`
       );
