@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { loginSuccess, loginStart } from "../redux/userSlice";
 
 const Container = styled.div`
   postion: sticky;
@@ -58,6 +59,7 @@ export const Navbar = () => {
           <User>
             <Button>My Playlist</Button>
             {currentUser.isAdmin ? <Button>Admin Dashboard</Button> : ""}
+            <Button>Logout</Button>
             <Avatar />
             {currentUser.name}
           </User>
