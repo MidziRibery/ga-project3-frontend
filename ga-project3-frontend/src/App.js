@@ -12,6 +12,7 @@ import {
   Route,
   Link,
   BrowserRouter,
+  Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
@@ -37,7 +38,8 @@ function App() {
           <Wrapper>
             <Routes>
               <Route path="/">
-                <Route index element={<Home />} />
+                <Route index element={<Navigate to="video/test" />} />
+                {/* <Route index element={<Home />} /> */}
                 <Route path="signin" element={<SignIn />} />
                 <Route path="video">
                   <Route path=":id" element={<Video />} />
