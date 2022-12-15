@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
-import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import Comments from "../components/Comments";
-import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { fetchSuccess } from "../redux/videoSlice";
+// import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+// import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
+// import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+// import Card from "../components/Card";
 
 const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
-const videoId = "6395e248d57ccff2aac8e5b2";
 
 const Container = styled.div`
   display: flex;
@@ -39,7 +38,7 @@ const Details = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const Info = styled.span``;
+
 const Buttons = styled.div`
   display: flex;
   gap: 20px;
@@ -56,9 +55,9 @@ const Hr = styled.hr`
     border: 0.5px solid black
 `;
 
-const Recommendation = styled.div`
-  flex: 2;
-`;
+// const Recommendation = styled.div`
+//   flex: 2;
+// `;
 
 const Channel = styled.div`
   display: flex;
@@ -70,11 +69,11 @@ const ChannelInfo = styled.div`
   gap: 20px;
 `;
 
-const Image = styled.img`
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-`;
+// const Image = styled.img`
+//   height: 50px;
+//   width: 50px;
+//   border-radius: 50%;
+// `;
 
 const ChannelDetail = styled.div`
   display: flex;
@@ -85,50 +84,55 @@ const ChannelName = styled.span`
   font-weight: 500;
 `;
 
-const ChannelCounter = styled.span`
-  margin-top: 5px;
-  margin-bottom: 20px;
-  font-size: 12px;
-`;
+// const ChannelCounter = styled.span`
+//   margin-top: 5px;
+//   margin-bottom: 20px;
+//   font-size: 12px;
+// `;
 
 const Description = styled.p`
   font-size: 14px;
 `;
 
-const Subscribe = styled.button`
-  background-color: #cc1a00;
-  color: white;
-  font-weight: 500;
-  border: none;
-  border-radius: 3px;
-  height: max-content;
-  cursor: pointer;
-  padding: 10px 20px;
-`;
+// const Subscribe = styled.button`
+//   background-color: #cc1a00;
+//   color: white;
+//   font-weight: 500;
+//   border: none;
+//   border-radius: 3px;
+//   height: max-content;
+//   cursor: pointer;
+//   padding: 10px 20px;
+// `;
 
 const Video = () => {
   const { currentVideo } = useSelector((state) => state.video);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const path = useLocation().pathname.split("/")[2];
 
+  const savedVideo = () => {
+    // useEffect to check for updated on the currentUser
+  };
+
+  const addToPlaylist = () => {};
+
   useEffect(() => {
-    if (path === "random") {
-      const fetchData = async () => {
-        try {
-          const videoRes = await axios.get(
-            `${API_URL}videos/random/${
-              currentVideo ? currentVideo._id : videoId
-            }`
-          );
-          console.log(videoRes.data[0]);
-          dispatch(fetchSuccess(videoRes.data[0]));
-        } catch (err) {
-          console.log(err.response);
-        }
-      };
-      fetchData();
-    }
+    const fetchData = async () => {
+      try {
+        const videoRes = await axios.get(
+          `${API_URL}videos/${
+            path === "random" ? `random/${currentVideo._id}` : `find/${path}`
+          }`
+        );
+        console.log(videoRes.data);
+        dispatch(fetchSuccess(videoRes.data[0])); // to be changed once server has been updated
+      } catch (err) {
+        console.log(err.response);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -147,7 +151,6 @@ const Video = () => {
         </VideoWrapper>
         <Title>{currentVideo.title}</Title>
         <Details>
-          {/* <Info>9,009 views ● Dec 7, 2022</Info> */}
           <Buttons>
             {/* <Button>
               <ThumbUpOutlinedIcon />
@@ -159,11 +162,18 @@ const Video = () => {
             <Button>
               <ReplyOutlinedIcon /> Share
             </Button> */}
-            <Button>
-              <AddTaskOutlinedIcon /> Save Video
-            </Button>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            {currentUser ? (
               <Button>
+                <AddTaskOutlinedIcon /> Save Video
+              </Button>
+            ) : (
+              //   <Button style={{ color: "green", pointerEvents: "none" }}>
+              //     <AddTaskOutlinedIcon /> Video Saved
+              //   </Button>
+              ""
+            )}
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              <Button onClick={addToPlaylist}>
                 <SkipNextIcon /> Next Video
               </Button>
             </Link>

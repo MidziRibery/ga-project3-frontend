@@ -141,7 +141,7 @@ const SignIn = () => {
       console.log(res.data);
       if (res.data) {
         dispatch(loginSuccess(res.data));
-        navigate("/video/test");
+        navigate("/video/random");
       }
     } catch (err) {
       console.log(err.response.data);
