@@ -6,7 +6,7 @@ import Comments from "../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
-import { fetchSuccess } from "../redux/videoSlice";
+import { fetchSuccess, fetchStart } from "../redux/videoSlice";
 // import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 // import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 // import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
@@ -106,7 +106,7 @@ const Description = styled.p`
 // `;
 
 const Video = () => {
-  const { currentVideo } = useSelector((state) => state.video);
+  const { currentVideo, loading } = useSelector((state) => state.video);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -120,6 +120,7 @@ const Video = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      dispatch(fetchStart());
       try {
         const videoRes = await axios.get(
           `${API_URL}videos/${
@@ -137,22 +138,23 @@ const Video = () => {
 
   return (
     <Container>
-      <Content>
-        <VideoWrapper>
-          <iframe
-            width="854"
-            height="480"
-            src={`https://www.youtube.com/embed/${currentVideo.youtubeId}`}
-            title="YouTube Video Player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
-        <Details>
-          <Buttons>
-            {/* <Button>
+      {!loading ? (
+        <Content>
+          <VideoWrapper>
+            <iframe
+              width="854"
+              height="480"
+              src={`https://www.youtube.com/embed/${currentVideo.youtubeId}`}
+              title="YouTube Video Player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </VideoWrapper>
+          <Title>{currentVideo.title}</Title>
+          <Details>
+            <Buttons>
+              {/* <Button>
               <ThumbUpOutlinedIcon />
               123
             </Button>
@@ -162,38 +164,41 @@ const Video = () => {
             <Button>
               <ReplyOutlinedIcon /> Share
             </Button> */}
-            {currentUser ? (
-              <Button>
-                <AddTaskOutlinedIcon /> Save Video
-              </Button>
-            ) : (
-              //   <Button style={{ color: "green", pointerEvents: "none" }}>
-              //     <AddTaskOutlinedIcon /> Video Saved
-              //   </Button>
-              ""
-            )}
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <Button onClick={addToPlaylist}>
-                <SkipNextIcon /> Next Video
-              </Button>
-            </Link>
-          </Buttons>
-        </Details>
-        <Hr />
-        <Channel>
-          <ChannelInfo>
-            {/* <Image src="https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg" /> */}
-            <ChannelDetail>
-              <ChannelName>{currentVideo.creator}</ChannelName>
-              {/* <ChannelCounter>300K subscribers</ChannelCounter> */}
-              <Description>{currentVideo.description}</Description>
-            </ChannelDetail>
-          </ChannelInfo>
-          {/* <Subscribe>SUBSCRIBE</Subscribe> */}
-        </Channel>
-        <Hr />
-        <Comments></Comments>
-      </Content>
+              {currentUser ? (
+                <Button>
+                  <AddTaskOutlinedIcon /> Save Video
+                </Button>
+              ) : (
+                //   <Button style={{ color: "green", pointerEvents: "none" }}>
+                //     <AddTaskOutlinedIcon /> Video Saved
+                //   </Button>
+                ""
+              )}
+              <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                <Button onClick={addToPlaylist}>
+                  <SkipNextIcon /> Next Video
+                </Button>
+              </Link>
+            </Buttons>
+          </Details>
+          <Hr />
+          <Channel>
+            <ChannelInfo>
+              {/* <Image src="https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg" /> */}
+              <ChannelDetail>
+                <ChannelName>{currentVideo.creator}</ChannelName>
+                {/* <ChannelCounter>300K subscribers</ChannelCounter> */}
+                <Description>{currentVideo.description}</Description>
+              </ChannelDetail>
+            </ChannelInfo>
+            {/* <Subscribe>SUBSCRIBE</Subscribe> */}
+          </Channel>
+          <Hr />
+          <Comments></Comments>
+        </Content>
+      ) : (
+        ""
+      )}
       {/* <Recommendation>
         <Card type="sm" />
         <Card type="sm" />
