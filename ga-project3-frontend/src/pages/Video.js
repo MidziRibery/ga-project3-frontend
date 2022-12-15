@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
@@ -7,9 +7,18 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import Comments from "../components/Comments";
 import Card from "../components/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, Link } from "react-router-dom";
+import axios from "axios";
+import { fetchSuccess } from "../redux/videoSlice";
+
+const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+const videoId = "6395e248d57ccff2aac8e5b2";
 
 const Container = styled.div`
   display: flex;
+  width: 50%;
+  margin-inline: auto;
   gap: 24px;
 `;
 const Content = styled.div`
@@ -98,25 +107,49 @@ const Subscribe = styled.button`
 `;
 
 const Video = () => {
+  const { currentVideo } = useSelector((state) => state.video);
+  const dispatch = useDispatch();
+
+  const path = useLocation().pathname.split("/")[2];
+
+  useEffect(() => {
+    if (path === "random") {
+      const fetchData = async () => {
+        try {
+          const videoRes = await axios.get(
+            `${API_URL}videos/random/${
+              currentVideo ? currentVideo._id : videoId
+            }`
+          );
+          console.log(videoRes.data[0]);
+          dispatch(fetchSuccess(videoRes.data[0]));
+        } catch (err) {
+          console.log(err.response);
+        }
+      };
+      fetchData();
+    }
+  }, []);
+
   return (
     <Container>
       <Content>
         <VideoWrapper>
           <iframe
-            width="100%"
-            height="360"
-            src="https://www.shutterstock.com/shutterstock/videos/1063674022/preview/stock-footage-back-of-little-boy-child-in-helmet-aviator-cosmonaut-running-with-toy-rocket-in-sunset-field-summer.webm"
+            width="854"
+            height="480"
+            src={`https://www.youtube.com/embed/${currentVideo.youtubeId}`}
             title="YouTube Video Player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
         </VideoWrapper>
-        <Title>Test Video</Title>
+        <Title>{currentVideo.title}</Title>
         <Details>
-          <Info>9,009 views ● Dec 7, 2022</Info>
+          {/* <Info>9,009 views ● Dec 7, 2022</Info> */}
           <Buttons>
-            <Button>
+            {/* <Button>
               <ThumbUpOutlinedIcon />
               123
             </Button>
@@ -125,40 +158,37 @@ const Video = () => {
             </Button>
             <Button>
               <ReplyOutlinedIcon /> Share
-            </Button>
+            </Button> */}
             <Button>
-              <AddTaskOutlinedIcon /> Save
+              <AddTaskOutlinedIcon /> Save Video
             </Button>
-            <Button>
-              <SkipNextIcon /> Next Video
-            </Button>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <Button>
+                <SkipNextIcon /> Next Video
+              </Button>
+            </Link>
           </Buttons>
         </Details>
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg" />
+            {/* <Image src="https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg" /> */}
             <ChannelDetail>
-              <ChannelName>Sleeping Kittens</ChannelName>
-              <ChannelCounter>300K subscribers</ChannelCounter>
-              <Description>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus ultricies ligula at luctus maximus. Mauris efficitur
-                ante arcu, vitae efficitur erat efficitur quis. Maecenas justo
-                velit, consequat sit amet justo vel, congue posuere massa.
-              </Description>
+              <ChannelName>{currentVideo.creator}</ChannelName>
+              {/* <ChannelCounter>300K subscribers</ChannelCounter> */}
+              <Description>{currentVideo.description}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
+          {/* <Subscribe>SUBSCRIBE</Subscribe> */}
         </Channel>
         <Hr />
         <Comments></Comments>
       </Content>
-      <Recommendation>
+      {/* <Recommendation>
         <Card type="sm" />
         <Card type="sm" />
         <Card type="sm" />
-      </Recommendation>
+      </Recommendation> */}
     </Container>
   );
 };
