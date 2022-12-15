@@ -24,10 +24,18 @@ export const userSlice = createSlice({
     logout: (state) => {
       return initialState;
     },
+    updateUserPlaylist: (state, action) => {
+      state.currentUser.playlist = action.payload;
+    },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } =
-  userSlice.actions;
+export const {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  logout,
+  updateUserPlaylist,
+} = userSlice.actions;
 
 export default userSlice.reducer;
