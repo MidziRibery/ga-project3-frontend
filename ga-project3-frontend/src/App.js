@@ -38,7 +38,7 @@ function App() {
           <Wrapper>
             <Routes>
               <Route path="/">
-                <Route index element={<Navigate to="video/test" />} />
+                <Route index element={<Navigate to="video/random" />} />
                 {/* <Route index element={<Home />} /> */}
                 <Route path="signin" element={<SignIn />} />
                 <Route path="video">
