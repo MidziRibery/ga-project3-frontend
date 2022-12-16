@@ -4,6 +4,10 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { loginSuccess, loginStart } from "../redux/userSlice";
+import axios from "axios";
+
+const API_URL = "http://localhost:3001/api/";
+// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
 
 const Container = styled.div`
   postion: sticky;
@@ -51,6 +55,19 @@ const Avatar = styled.img`
 
 export const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
+
+  const handleLogout = async (e) => {
+    try {
+      const res = await axios.get(
+        `${API_URL}auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
   return (
     <Container>
       <Wrapper>
@@ -59,7 +76,7 @@ export const Navbar = () => {
           <User>
             <Button>My Playlist</Button>
             {currentUser.isAdmin ? <Button>Admin Dashboard</Button> : ""}
-            <Button>Logout</Button>
+            <Button onClick={handleLogout}>Logout</Button>
             <Avatar />
             {currentUser.name}
           </User>
