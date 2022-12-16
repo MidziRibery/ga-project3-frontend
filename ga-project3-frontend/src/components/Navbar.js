@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { loginSuccess, loginStart } from "../redux/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 import axios from "axios";
 
 const API_URL = "http://localhost:3001/api/";
@@ -55,15 +55,17 @@ const Avatar = styled.img`
 
 export const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleLogout = async (e) => {
     try {
-      const res = await axios.get(
-        `${API_URL}auth/logout`,
-        {},
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${API_URL}auth/logout`, {
+        withCredentials: true,
+      });
       console.log(res.data);
+      if (res.data.success) {
+        dispatch(logout());
+      }
     } catch (err) {
       console.log(err.response.data);
     }
