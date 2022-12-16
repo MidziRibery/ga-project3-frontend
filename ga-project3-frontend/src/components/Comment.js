@@ -44,7 +44,6 @@ const Comment = ({ comment }) => {
   useEffect(() => {
     const fetchComment = async () => {
       const res = await axios.get(`${API_URL}users/find/${comment.userId}`);
-      console.log(res.data);
       setUser(res.data);
     };
     fetchComment();

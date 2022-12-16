@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Comment from "./Comment";
 import axios from "axios";
@@ -9,7 +10,7 @@ const API_URL = "http://localhost:3001/api/";
 
 const Container = styled.div``;
 
-const NewComment = styled.div`
+const NewComment = styled.form`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -31,8 +32,33 @@ const Input = styled.input`
 `;
 
 const Comments = ({ videoId }) => {
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    if (comment === "") return;
+    if (currentUser) {
+      try {
+        const res = await axios.post(
+          `${API_URL}comments/`,
+          {
+            videoId: videoId,
+            desc: comment,
+          },
+          { withCredentials: true }
+        );
+        setComments([...comments, res.data]);
+        setComment("");
+      } catch (err) {
+        console.log(err.response.data);
+      }
+    } else {
+      navigate("/signin");
+    }
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -50,7 +76,7 @@ const Comments = ({ videoId }) => {
 
   return (
     <Container>
-      <NewComment>
+      <NewComment onSubmit={handleAddComment}>
         <Avatar
           src={
             currentUser
@@ -58,9 +84,14 @@ const Comments = ({ videoId }) => {
               : "https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg"
           }
         />
-        <Input placeholder="Add a comment"></Input>
+        <Input
+          type="text"
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
+          placeholder="Add a comment"
+        ></Input>
       </NewComment>
-      {commentArr}
+      {comments.length === 0 ? "No comments yet" : commentArr}
     </Container>
   );
 };
