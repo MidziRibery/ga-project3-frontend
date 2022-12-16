@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { fetchSuccess, fetchStart } from "../redux/videoSlice";
+import { updateUserPlaylist } from "../redux/userSlice";
+import { current } from "@reduxjs/toolkit";
 // import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 // import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 // import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 // import Card from "../components/Card";
 
-const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+const API_URL = "http://localhost:3001/api/";
 
 const Container = styled.div`
   display: flex;
@@ -109,14 +112,23 @@ const Video = () => {
   const { currentVideo, loading } = useSelector((state) => state.video);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [videoSaved, setVideoSaved] = useState(false);
 
   const path = useLocation().pathname.split("/")[2];
 
-  const savedVideo = () => {
-    // useEffect to check for updated on the currentUser
+  const saveVideo = async () => {
+    try {
+      const res = await axios.put(
+        `${API_URL}users/playlist/add/${currentVideo._id}`,
+        {},
+        { withCredentials: true }
+      );
+      console.log(res.data);
+      dispatch(updateUserPlaylist(res.data));
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
-
-  const addToPlaylist = () => {};
 
   useEffect(() => {
     const fetchData = async () => {
@@ -128,13 +140,20 @@ const Video = () => {
           }`
         );
         console.log(videoRes.data);
-        dispatch(fetchSuccess(videoRes.data[0])); // to be changed once server has been updated
+        dispatch(fetchSuccess(videoRes.data));
       } catch (err) {
         console.log(err.response);
       }
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      const isSaved = currentUser.playlist.includes(currentVideo._id);
+      setVideoSaved(isSaved);
+    }
+  }, [currentVideo, currentUser]);
 
   return (
     <Container>
@@ -165,8 +184,14 @@ const Video = () => {
               <ReplyOutlinedIcon /> Share
             </Button> */}
               {currentUser ? (
-                <Button>
-                  <AddTaskOutlinedIcon /> Save Video
+                <Button
+                  onClick={saveVideo}
+                  style={
+                    videoSaved ? { color: "green", pointerEvents: "none" } : {}
+                  }
+                >
+                  <AddTaskOutlinedIcon />{" "}
+                  {videoSaved ? "Video Saved" : "Save Video"}
                 </Button>
               ) : (
                 //   <Button style={{ color: "green", pointerEvents: "none" }}>
@@ -175,7 +200,7 @@ const Video = () => {
                 ""
               )}
               <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                <Button onClick={addToPlaylist}>
+                <Button>
                   <SkipNextIcon /> Next Video
                 </Button>
               </Link>

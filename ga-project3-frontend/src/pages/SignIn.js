@@ -6,7 +6,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginStart } from "../redux/userSlice";
 
-const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+const API_URL = "http://localhost:3001/api/";
+// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
 
 const Container = styled.div`
   display: flex;
@@ -137,7 +138,9 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post(`${API_URL}auth/signin/`, loginValues);
+      const res = await axios.post(`${API_URL}auth/signin/`, loginValues, {
+        withCredentials: true,
+      });
       console.log(res.data);
       if (res.data) {
         dispatch(loginSuccess(res.data));
