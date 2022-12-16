@@ -1,21 +1,12 @@
 import React from "react";
 import "./App.css";
-import Button from "react-bootstrap/Button";
 import Menu from "./components/Menu";
 import { Navbar } from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
-import { createRoot } from "react-dom/client";
-import {
-  createBrowserRouter,
-  Routes,
-  Route,
-  Link,
-  BrowserRouter,
-  Navigate,
-} from "react-router-dom";
-import Home from "./pages/Home";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+// import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Video from "./pages/Video";
 
@@ -30,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
   return (
     <Container>
       <BrowserRouter>
@@ -44,7 +35,7 @@ function App() {
                 {/* <Route index element={<Home />} /> */}
                 <Route
                   path="signin"
-                  element={<SignIn setCookie={setCookie} />}
+                  element={<SignIn setCookie={setCookie} cookie={cookies} />}
                 />
                 <Route path="video">
                   <Route path=":id" element={<Video />} />

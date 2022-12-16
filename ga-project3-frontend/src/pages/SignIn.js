@@ -50,7 +50,7 @@ const Button = styled.button`
   background-color: #dee2e6;
 `;
 
-const SignIn = ({ setCookie }) => {
+const SignIn = ({ setCookie, cookies }) => {
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const [registerErrorMessage, setRegisterErrorMessage] = useState("");
   const [registrationSuccessMessage, setRegistrationSuccessMessage] =
@@ -138,12 +138,14 @@ const SignIn = ({ setCookie }) => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post(`${API_URL}auth/signin/`, loginValues);
+      const res = await axios.post(`${API_URL}auth/signin/`, loginValues, {
+        withCredentials: true,
+      });
       // console.log(res.data);
       if (res.data) {
         const { access_token, ...userData } = res.data;
         // console.log(access_token);
-        setCookie("access_token", access_token);
+        setCookie("access_token", access_token, { path: "/" });
         dispatch(loginSuccess(userData));
         navigate("/video/random");
       }

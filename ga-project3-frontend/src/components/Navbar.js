@@ -58,7 +58,7 @@ export const Navbar = ({ removeCookie }) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    removeCookie("access_token");
+    removeCookie("access_token", { path: "/" });
     dispatch(logout());
   };
   return (
