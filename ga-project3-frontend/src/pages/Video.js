@@ -219,7 +219,7 @@ const Video = () => {
             {/* <Subscribe>SUBSCRIBE</Subscribe> */}
           </Channel>
           <Hr />
-          <Comments></Comments>
+          <Comments videoId={currentVideo._id} />
         </Content>
       ) : (
         ""
