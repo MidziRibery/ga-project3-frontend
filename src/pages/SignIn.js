@@ -6,8 +6,9 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginStart } from "../redux/userSlice";
 
-const API_URL = "http://localhost:3001/api/";
-// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+// const API_URL = "http://localhost:3001/api/";
+const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+// const API_URL = "https://comfort-tube.cyclic.app/api/";
 
 const Container = styled.div`
   display: flex;
@@ -145,7 +146,11 @@ const SignIn = ({ setCookie, cookies }) => {
       if (res.data) {
         const { access_token, ...userData } = res.data;
         // console.log(access_token);
-        setCookie("access_token", access_token, { path: "/" });
+        setCookie("access_token", access_token, {
+          path: "/",
+          sameSite: "none",
+          secure: true,
+        });
         dispatch(loginSuccess(userData));
         navigate("/video/random");
       }

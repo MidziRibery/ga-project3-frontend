@@ -5,8 +5,9 @@ import Comment from "./Comment";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const API_URL = "http://localhost:3001/api/";
-// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+// const API_URL = "http://localhost:3001/api/";
+// const API_URL = "https://comfort-tube.cyclic.app/api/";
+const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
 
 const Container = styled.div``;
 

@@ -3,8 +3,9 @@ import styled from "styled-components";
 import axios from "axios";
 import { format } from "timeago.js";
 
-// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
-const API_URL = "http://localhost:3001/api/";
+const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+// const API_URL = "http://localhost:3001/api/";
+// const API_URL = "https://comfort-tube.cyclic.app/api/";
 
 const Container = styled.div`
   display: flex;

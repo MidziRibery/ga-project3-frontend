@@ -4,10 +4,6 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
-// import axios from "axios";
-
-const API_URL = "http://localhost:3001/api/";
-// const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
 
 const Container = styled.div`
   postion: sticky;
@@ -58,7 +54,11 @@ export const Navbar = ({ removeCookie }) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    removeCookie("access_token", { path: "/" });
+    removeCookie("access_token", {
+      path: "/",
+      sameSite: "none",
+      secure: true,
+    });
     dispatch(logout());
   };
   return (
