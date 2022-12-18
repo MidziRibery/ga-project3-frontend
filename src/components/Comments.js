@@ -4,10 +4,7 @@ import styled from "styled-components";
 import Comment from "./Comment";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
-// const API_URL = "http://localhost:3001/api/";
-// const API_URL = "https://comfort-tube.cyclic.app/api/";
-const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
+import { API_URL } from "../api-util";
 
 const Container = styled.div``;
 
@@ -32,7 +29,7 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const Comments = ({ videoId }) => {
+const Comments = ({ videoId, cookies }) => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [comments, setComments] = useState([]);
@@ -49,7 +46,9 @@ const Comments = ({ videoId }) => {
             videoId: videoId,
             desc: comment,
           },
-          { withCredentials: true }
+          {
+            headers: { access_token: cookies.access_token },
+          }
         );
         setComments([...comments, res.data]);
         setComment("");

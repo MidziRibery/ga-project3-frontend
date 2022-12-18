@@ -8,15 +8,11 @@ import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { fetchSuccess, fetchStart } from "../redux/videoSlice";
 import { updateUserPlaylist } from "../redux/userSlice";
-import { current } from "@reduxjs/toolkit";
+import { API_URL } from "../api-util";
 // import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 // import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 // import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 // import Card from "../components/Card";
-
-const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
-// const API_URL = "http://localhost:3001/api/";
-// const API_URL = "https://comfort-tube.cyclic.app/api/";
 
 const Container = styled.div`
   display: flex;
@@ -109,7 +105,7 @@ const Description = styled.p`
 //   padding: 10px 20px;
 // `;
 
-const Video = () => {
+const Video = ({ cookies }) => {
   const { currentVideo, loading } = useSelector((state) => state.video);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -122,9 +118,10 @@ const Video = () => {
       const res = await axios.put(
         `${API_URL}users/playlist/add/${currentVideo._id}`,
         {},
-        { withCredentials: true }
+        {
+          headers: { access_token: cookies.access_token },
+        }
       );
-      console.log(res.data);
       dispatch(updateUserPlaylist(res.data));
     } catch (err) {
       console.log(err.response.data);
@@ -132,6 +129,7 @@ const Video = () => {
   };
 
   useEffect(() => {
+    console.log(cookies);
     const fetchData = async () => {
       dispatch(fetchStart());
       try {
@@ -195,9 +193,6 @@ const Video = () => {
                   {videoSaved ? "Video Saved" : "Save Video"}
                 </Button>
               ) : (
-                //   <Button style={{ color: "green", pointerEvents: "none" }}>
-                //     <AddTaskOutlinedIcon /> Video Saved
-                //   </Button>
                 ""
               )}
               <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
@@ -220,7 +215,7 @@ const Video = () => {
             {/* <Subscribe>SUBSCRIBE</Subscribe> */}
           </Channel>
           <Hr />
-          <Comments videoId={currentVideo._id} />
+          <Comments videoId={currentVideo._id} cookies={cookies} />
         </Content>
       ) : (
         ""
