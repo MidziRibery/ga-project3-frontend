@@ -10,7 +10,11 @@ const Container = styled.div`
 
 const Home = () => {
   return (
+    <div>
+      <h1>Playlist</h1>
     <Container>
+        <Card/>
+        <Card/>
         <Card/>
         <Card/>
         <Card/>
@@ -20,6 +24,7 @@ const Home = () => {
 
 
     </Container>
+    </div>
   )
 }
 
