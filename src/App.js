@@ -12,6 +12,7 @@ import Video from "./pages/Video";
 
 const Container = styled.div`
   display: flex;
+  min-height: 100vh;
 `;
 const Main = styled.div`
   flex: 7;
@@ -35,10 +36,10 @@ function App() {
                 {/* <Route index element={<Home />} /> */}
                 <Route
                   path="signin"
-                  element={<SignIn setCookie={setCookie} cookie={cookies} />}
+                  element={<SignIn setCookie={setCookie} cookies={cookies} />}
                 />
                 <Route path="video">
-                  <Route path=":id" element={<Video />} />
+                  <Route path=":id" element={<Video cookies={cookies} />} />
                 </Route>
               </Route>
             </Routes>

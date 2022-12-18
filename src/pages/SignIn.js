@@ -5,10 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginStart } from "../redux/userSlice";
-
-// const API_URL = "http://localhost:3001/api/";
-const API_URL = "https://odd-rose-lobster-hem.cyclic.app/api/";
-// const API_URL = "https://comfort-tube.cyclic.app/api/";
+import { API_URL } from "../api-util";
 
 const Container = styled.div`
   display: flex;
@@ -51,7 +48,7 @@ const Button = styled.button`
   background-color: #dee2e6;
 `;
 
-const SignIn = ({ setCookie, cookies }) => {
+const SignIn = ({ setCookie, cookie }) => {
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const [registerErrorMessage, setRegisterErrorMessage] = useState("");
   const [registrationSuccessMessage, setRegistrationSuccessMessage] =
@@ -148,7 +145,7 @@ const SignIn = ({ setCookie, cookies }) => {
         // console.log(access_token);
         setCookie("access_token", access_token, {
           path: "/",
-          sameSite: "none",
+          sameSite: "lax",
           secure: true,
         });
         dispatch(loginSuccess(userData));
