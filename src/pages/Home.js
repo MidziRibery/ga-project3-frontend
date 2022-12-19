@@ -13,6 +13,7 @@ const Home = () => {
     <div>
       <h1>Playlist</h1>
     <Container>
+      {/* Think how to add a video everytime someone save a vid */}
         <Card/>
         <Card/>
         <Card/>
