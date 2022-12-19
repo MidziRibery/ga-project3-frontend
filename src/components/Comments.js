@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import defaultProfileImg from "../img/default_profile_img.jpg";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Comment from "./Comment";
@@ -77,13 +78,7 @@ const Comments = ({ videoId, cookies }) => {
   return (
     <Container>
       <NewComment onSubmit={handleAddComment}>
-        <Avatar
-          src={
-            currentUser
-              ? currentUser.image
-              : "https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg"
-          }
-        />
+        <Avatar src={defaultProfileImg} />
         <Input
           type="text"
           onChange={(e) => setComment(e.target.value)}

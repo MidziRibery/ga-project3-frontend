@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import defaultProfileImg from "../img/default_profile_img.jpg";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
@@ -22,16 +23,17 @@ const Wrapper = styled.div`
 
 const Button = styled.button`
   padding: 5px 15px;
-  background-color: transparent;
-  border: 1px solid white;
+  background-color: mediumpurple;
   color: white;
   border-radius: 3px;
   font-weight: 500;
-  margin-top: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
+  &:hover {
+    background-color: mediumslateblue;
+  }
 `;
 
 const User = styled.div`
@@ -70,7 +72,9 @@ export const Navbar = ({ removeCookie }) => {
             <Button>My Playlist</Button>
             {currentUser.isAdmin ? <Button>Admin Dashboard</Button> : ""}
             <Button onClick={handleLogout}>Logout</Button>
-            <Avatar />
+            <Avatar
+              src={currentUser.image ? currentUser.image : defaultProfileImg}
+            />
             {currentUser.name}
           </User>
         ) : (

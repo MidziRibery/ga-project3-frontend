@@ -45,7 +45,11 @@ const Button = styled.button`
   padding: 10px 20px;
   font-weight: 500;
   cursor: pointer;
-  background-color: #dee2e6;
+  background-color: mediumpurple;
+  color: white;
+  &:hover {
+    background-color: mediumslateblue;
+  }
 `;
 
 const SignIn = ({ setCookie, cookie }) => {

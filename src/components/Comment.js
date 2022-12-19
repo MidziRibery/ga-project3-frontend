@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import defaultProfileImg from "../img/default_profile_img.jpg";
 import styled from "styled-components";
 import axios from "axios";
 import { format } from "timeago.js";
@@ -48,7 +49,7 @@ const Comment = ({ comment }) => {
   }, []);
   return (
     <Container>
-      <Avatar src="https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg" />
+      <Avatar src={user.image ? user.image : defaultProfileImg} />
       <Details>
         <Name>{user.name}</Name>
         <Date>{format(comment.createdAt)}</Date>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ComfortTube from "../img/YT Logo.jpg";
+import ComfortTube from "../img/comfort_tube_logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
