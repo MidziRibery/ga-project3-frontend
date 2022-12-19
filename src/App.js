@@ -8,7 +8,6 @@ import styled from "styled-components";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./redux/userSlice";
-import jwt from "jwt-decode";
 import { API_URL } from "./api-util";
 // import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
@@ -31,9 +30,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUserData = async (userId) => {
+    const fetchUserData = async () => {
       try {
-        const userRes = await axios.get(`${API_URL}users/find/${userId}`);
+        const userRes = await axios.get(`${API_URL}users/retrieve/`, {
+          headers: { access_token: cookies.access_token },
+        });
         if (userRes.data) {
           dispatch(loginSuccess(userRes.data));
         }
@@ -42,10 +43,10 @@ function App() {
       }
     };
     if (cookies.access_token) {
-      const { id } = jwt(cookies.access_token);
-      fetchUserData(id);
+      fetchUserData();
     }
   }, []);
+
   return (
     <Container>
       <BrowserRouter>

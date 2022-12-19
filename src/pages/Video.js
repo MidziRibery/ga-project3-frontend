@@ -129,7 +129,7 @@ const Video = ({ cookies }) => {
   };
 
   useEffect(() => {
-    console.log(cookies);
+    // console.log(cookies);
     const fetchData = async () => {
       dispatch(fetchStart());
       try {
