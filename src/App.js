@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Menu from "./components/Menu";
 import { Navbar } from "./components/Navbar";
@@ -6,9 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./redux/userSlice";
+import jwt from "jwt-decode";
+import { API_URL } from "./api-util";
 // import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Video from "./pages/Video";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -23,6 +28,24 @@ const Wrapper = styled.div`
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchUserData = async (userId) => {
+      try {
+        const userRes = await axios.get(`${API_URL}users/find/${userId}`);
+        if (userRes.data) {
+          dispatch(loginSuccess(userRes.data));
+        }
+      } catch (err) {
+        console.log(err.response.data);
+      }
+    };
+    if (cookies.access_token) {
+      const { id } = jwt(cookies.access_token);
+      fetchUserData(id);
+    }
+  }, []);
   return (
     <Container>
       <BrowserRouter>
