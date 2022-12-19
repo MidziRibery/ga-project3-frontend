@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Video from "./pages/Video";
 
@@ -38,6 +38,9 @@ function App() {
                   path="signin"
                   element={<SignIn setCookie={setCookie} cookies={cookies} />}
                 />
+                <Route path="playlist">
+                <Route index element={<Home />} />
+                </Route>
                 <Route path="video">
                   <Route path=":id" element={<Video cookies={cookies} />} />
                 </Route>

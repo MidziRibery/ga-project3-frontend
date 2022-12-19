@@ -72,17 +72,21 @@ export const Menu = () => {
             ComfortTube
           </Logo>
         </Link>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
-        <Hr />
-        <Login>Sign in to like videos, comment, and subscribe.</Login>
-        <Button>
-          <AccountCircleOutlinedIcon /> Sign In
-        </Button>
-        <Hr />
-      </Wrapper>
+            <Item>
+            <Link to="playlist" style={{ textDecoration: "none" }}>
+                <HomeIcon/>
+                Home
+            </Link>
+            </Item>
+            <Hr/>
+            <Login>
+                Sign in to like videos, comment, and subscribe.
+            </Login>
+            <Link to="signin" style={{ textDecoration: "none" }}>
+            <Button><AccountCircleOutlinedIcon/> Sign In</Button>
+            </Link>
+            <Hr/>
+        </Wrapper>
     </Container>
   );
 };

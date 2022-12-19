@@ -67,7 +67,9 @@ export const Navbar = ({ removeCookie }) => {
         {/* <Button>Register</Button> */}
         {currentUser ? (
           <User>
+            <Link to="playlist" style={{ textDecoration: "none" }}>
             <Button>My Playlist</Button>
+            </Link>
             {currentUser.isAdmin ? <Button>Admin Dashboard</Button> : ""}
             <Button onClick={handleLogout}>Logout</Button>
             <Avatar />
