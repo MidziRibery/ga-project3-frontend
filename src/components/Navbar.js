@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import defaultProfileImg from "../img/default_profile_img.jpg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 
@@ -22,16 +23,17 @@ const Wrapper = styled.div`
 
 const Button = styled.button`
   padding: 5px 15px;
-  background-color: transparent;
-  border: 1px solid white;
+  background-color: mediumpurple;
   color: white;
   border-radius: 3px;
   font-weight: 500;
-  margin-top: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
+  &:hover {
+    background-color: mediumslateblue;
+  }
 `;
 
 const User = styled.div`
@@ -39,7 +41,8 @@ const User = styled.div`
   align-items: center;
   gap: 10px;
   font-weight: 500;
-  color: white;
+  padding: 18px 20px;
+  border-bottom: 1px solid lightgrey;
 `;
 
 const Avatar = styled.img`
@@ -47,11 +50,37 @@ const Avatar = styled.img`
   height: 32px;
   border-radius: 50%;
   background-color: #999;
+  cursor: pointer;
+  border: 1px solid black;
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  background-color: white;
+  top: 56px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  opacity: ${(props) => (props.menuExpanded ? "100%" : "0")};
+  visibility: ${(props) => (props.menuExpanded ? "visible" : "hidden")};
+`;
+
+const MenuItem = styled.li`
+  list-style-type: none;
+  padding: 5px 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: mediumpurple;
+    color: white;
+  }
 `;
 
 export const Navbar = ({ removeCookie }) => {
   const { currentUser } = useSelector((state) => state.user);
+  const [menuExpanded, setMenuExpanded] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const path = useLocation().pathname.split("/")[1];
 
   const handleLogout = () => {
     removeCookie("access_token", {
@@ -60,21 +89,51 @@ export const Navbar = ({ removeCookie }) => {
       secure: true,
     });
     dispatch(logout());
+    setMenuExpanded(false);
+    if (path === "admin") {
+      navigate("/");
+    }
   };
+
   return (
     <Container>
       <Wrapper>
         {/* <Button>Register</Button> */}
         {currentUser ? (
-          <User>
-            <Link to="playlist" style={{ textDecoration: "none" }}>
-            <Button>My Playlist</Button>
-            </Link>
-            {currentUser.isAdmin ? <Button>Admin Dashboard</Button> : ""}
-            <Button onClick={handleLogout}>Logout</Button>
-            <Avatar />
-            {currentUser.name}
-          </User>
+          <>
+            <Avatar
+              onClick={() => {
+                setMenuExpanded(!menuExpanded);
+              }}
+              src={currentUser.image ? currentUser.image : defaultProfileImg}
+            />
+            <DropdownMenu menuExpanded={menuExpanded}>
+              <User>
+                <Avatar
+                  src={
+                    currentUser.image ? currentUser.image : defaultProfileImg
+                  }
+                />
+                {currentUser.name}
+              </User>
+              <ul style={{ paddingLeft: "0", marginBlock: "5px" }}>
+                <MenuItem>My Playlist</MenuItem>
+                {currentUser.isAdmin ? (
+                  <MenuItem>
+                    <Link
+                      to="admin"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Admin Dashboard
+                    </Link>
+                  </MenuItem>
+                ) : (
+                  ""
+                )}
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </ul>
+            </DropdownMenu>
+          </>
         ) : (
           <Link to="signin" style={{ textDecoration: "none" }}>
             <Button>
