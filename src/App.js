@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "./redux/userSlice";
 import { API_URL } from "./api-util";
 // import Home from "./pages/Home";
+import AdminDashboard from "./pages/AdminDashboard";
 import SignIn from "./pages/SignIn";
 import Video from "./pages/Video";
 import axios from "axios";
@@ -61,6 +62,10 @@ function App() {
                 <Route
                   path="signin"
                   element={<SignIn setCookie={setCookie} cookies={cookies} />}
+                />
+                <Route
+                  path="admin"
+                  element={<AdminDashboard cookies={cookies} />}
                 />
                 <Route path="video">
                   <Route path=":id" element={<Video cookies={cookies} />} />

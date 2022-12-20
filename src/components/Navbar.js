@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import defaultProfileImg from "../img/default_profile_img.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, usNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 
@@ -54,6 +54,9 @@ const Avatar = styled.img`
 export const Navbar = ({ removeCookie }) => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const path = useLocation().pathname.split("/")[1];
 
   const handleLogout = () => {
     removeCookie("access_token", {
@@ -62,6 +65,9 @@ export const Navbar = ({ removeCookie }) => {
       secure: true,
     });
     dispatch(logout());
+    if (path === "admin") {
+      navigate("/");
+    }
   };
   return (
     <Container>
@@ -70,7 +76,13 @@ export const Navbar = ({ removeCookie }) => {
         {currentUser ? (
           <User>
             <Button>My Playlist</Button>
-            {currentUser.isAdmin ? <Button>Admin Dashboard</Button> : ""}
+            {currentUser.isAdmin ? (
+              <Link to="admin">
+                <Button>Admin Dashboard</Button>
+              </Link>
+            ) : (
+              ""
+            )}
             <Button onClick={handleLogout}>Logout</Button>
             <Avatar
               src={currentUser.image ? currentUser.image : defaultProfileImg}
