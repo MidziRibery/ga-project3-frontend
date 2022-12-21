@@ -8,7 +8,7 @@ const Container = styled.div`
     flex-wrap: wrap;
 `;
 
-const Home = () => {
+const Playlist = () => {
   return (
     <div>
       <h1>Playlist</h1>
@@ -29,4 +29,14 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Playlist
+
+// const videoRes = await axios.get(`${API_URL}videos/all/`, {
+//   headers: { access_token: cookies.access_token },
+// });
+// Must use useEffect 
+// this park here first,
+
+//axios.delete here too.
+//delete button handleDeleteVideo needs to be inside the card.
+// function is at home and pass it down. useState?
