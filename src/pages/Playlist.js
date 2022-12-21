@@ -30,7 +30,7 @@ const Playlist = ({ cookies }) => {
         console.log(err.response.data);
       }
     };
-    if (currentUser && currentUser.isAdmin) {
+    if (currentUser) {
       fetchVideoData();
     } else {
       navigate("/video/random");
