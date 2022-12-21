@@ -5,18 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { API_URL } from "../api-util";
 import axios from "axios";
-​
+
 const Container = styled.div`
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 `;
-​
+
 const AdminDashboard = ({ cookies }) => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [videos, setVideos] = useState([]);
-​
+  
   // function passed to card component in order to remove video
   const handleRemoveVideo = async (videoId) => {
     try {
@@ -33,13 +33,13 @@ const AdminDashboard = ({ cookies }) => {
       console.log(err.response.data);
     }
   };
-​
+
   useEffect(() => {
     const fetchVideoData = async () => {
       try {
         const videoRes = await axios.get(
           `${API_URL}videos/all/`,
-​
+
           {
             headers: { access_token: cookies.access_token },
           }
@@ -57,7 +57,7 @@ const AdminDashboard = ({ cookies }) => {
       navigate("/video/random");
     }
   }, []);
-​
+
   const videoArr = videos.map((video) => {
     return (
       <Card
@@ -67,8 +67,8 @@ const AdminDashboard = ({ cookies }) => {
       /> // handleRemoveVideo function passed to child component to be used
     );
   });
-​
+
   return <Container>{videoArr}</Container>;
 };
-​
+
 export default AdminDashboard;
