@@ -1,68 +1,79 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { format } from "timeago.js"; // make sure timeago.js is installed from package.json
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"; // icon for delete button
 const Container = styled.div`
-    width: ${(props)=>props.type !== 'sm' && '360px'};
-    margin-bottom: ${(props)=>props.type === 'sm' ? '10px' : '45px'};
-    cursor: pointer;
-    display: ${(props)=>props.type === 'sm' && 'flex'};
-    gap: 10px;
+  width: ${(props) => props.type !== "sm" && "360px"};
+  margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "45px")};
+  display: ${(props) => props.type === "sm" && "flex"};
+  gap: 10px;
 `;
-
 const Image = styled.img`
-    width: 100%;
-    height: ${(props)=>props.type === 'sm' ? '120px' : '202px'};;
-    background-color: #999;
-    flex:1;
-
+  width: 100%;
+  height: ${(props) => (props.type === "sm" ? "120px" : "202px")};
+  background-color: #999;
+  flex: 1;
 `;
-
 const Details = styled.div`
-    display: flex;
-    margin-top: ${(props)=>props.type !== 'sm' && '16px'};
-    gap: 12px;
-    flex:1;
+  display: flex;
+  justify-content: space-between;
+  margin-top: ${(props) => props.type !== "sm" && "16px"};
+  gap: 12px;
+  flex: 1;
 `;
-
-const ChannelImage = styled.img`
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #999;
-    display: ${(props)=>props.type === 'sm' && 'none'};
+const Button = styled.button`
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  align-self: start;
+  &:hover {
+    color: darkred;
+  }
 `;
-
 const Texts = styled.div``;
 const Title = styled.h1`
-    font-size: 16px;
-    font-weight: 500;
+  font-size: 16px;
+  font-weight: 500;
 `;
 const ChannelName = styled.h2`
-    font-size: 14px;
-    margin: 10px 0px;
-
+  font-size: 14px;
+  margin: 10px 0px;
 `;
 const Info = styled.div`
-    font-size: 14px;
+  font-size: 14px;
 `;
-
-function Card({type}) {
+function Card({ video, handleRemoveVideo }) {
   return (
-    <Link to='/video/test' style={{textDecoration:'none', color:'inherit'}}>
-    <Container type={type}>
-       <Image type={type} />
-       <Details type={type}>
-        <ChannelImage type={type}/>
+    <Container>
+      <Link
+        to={`/video/${video._id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <Image src={video.thumbnail} />
+      </Link>
+      <Details>
         <Texts>
-            <Title>Test Video</Title>
-            <ChannelName>ComfortTube</ChannelName>
-            <Info>9,009 views ● 1 day ago</Info>
+          <Link
+            to={`/video/${video._id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Title>{video.title}</Title>{" "}
+          </Link>
+          <ChannelName>{video.creator}</ChannelName>
+          <Info>{format(video.updatedAt)}</Info>
         </Texts>
-       </Details>
-    </Container>
-    </Link>
-  )
+        {/* pass id of video to handleRemoveVideo function */}
+        <Button
+          onClick={() => {
+            handleRemoveVideo(video._id);
+          }}
+        >
+          <DeleteOutlineIcon />
+        </Button>
+      </Details>
+    </Container> // layout of card has been altered
+  );
 }
-
-export default Card
+export default Card;
