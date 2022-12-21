@@ -20,7 +20,7 @@ const Playlist = ({ cookies }) => {
   useEffect(() => {
     const fetchVideoData = async () => {
       try {
-        const videoRes = await axios.get(`${API_URL}videos/all/`, {
+        const videoRes = await axios.get(`${API_URL}users/playlist/`, {
           headers: { access_token: cookies.access_token },
         });
         if (videoRes) {
