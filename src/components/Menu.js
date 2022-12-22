@@ -69,7 +69,7 @@ export const Menu = () => {
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
             <Img src={ComfortTube} />
-            ComfortTube
+            TranquilTube
           </Logo>
         </Link>
             <Item>
