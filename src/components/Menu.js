@@ -73,7 +73,7 @@ export const Menu = () => {
           </Logo>
         </Link>
             <Item>
-            <Link to="playlist" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <HomeIcon/>
                 Home
             </Link>
