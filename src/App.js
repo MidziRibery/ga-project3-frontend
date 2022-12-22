@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./redux/userSlice";
 import { API_URL } from "./api-util";
@@ -13,6 +14,7 @@ import { API_URL } from "./api-util";
 import AdminDashboard from "./pages/AdminDashboard";
 import SignIn from "./pages/SignIn";
 import Video from "./pages/Video";
+import Playlist from "./pages/Playlist";
 import axios from "axios";
 
 const Container = styled.div`
@@ -66,6 +68,10 @@ function App() {
                 <Route
                   path="admin"
                   element={<AdminDashboard cookies={cookies} />}
+                />
+                <Route
+                  path="playlist"
+                  element={<Playlist cookies={cookies} />}
                 />
                 <Route path="video">
                   <Route path=":id" element={<Video cookies={cookies} />} />

@@ -148,7 +148,14 @@ export const Navbar = ({ removeCookie }) => {
                 {currentUser.name}
               </User>
               <ul style={{ paddingLeft: "0", marginBlock: "5px" }}>
-                <MenuItem>My Playlist</MenuItem>
+                <MenuItem>
+                  <Link
+                      to="playlist"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                    My Playlist
+                  </Link>
+                </MenuItem>
                 {currentUser.isAdmin ? (
                   <MenuItem>
                     <Link
