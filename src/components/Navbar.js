@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ComfortTube from "../img/comfort_tube_logo.png";
 import defaultProfileImg from "../img/default_profile_img.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
+
+const Img = styled.img`
+  height: 25px;
+`;
+
+const Logo = styled.div`
+  display: flex;
+  align-self: center;
+  gap: 5px;
+  font-weight: bold;
+  color: white;
+`;
 
 const Container = styled.div`
   postion: sticky;
@@ -15,7 +28,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   position: relative;
   height: 100%;
   padding: 0px 20px;
@@ -58,6 +71,7 @@ const DropdownMenu = styled.div`
   position: absolute;
   background-color: white;
   top: 56px;
+  right: 10px;
   border-radius: 5px;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   opacity: ${(props) => (props.menuExpanded ? "100%" : "0")};
@@ -95,9 +109,26 @@ export const Navbar = ({ removeCookie }) => {
     }
   };
 
+  useEffect(() => {
+    setMenuExpanded(false);
+  }, [path]);
+
   return (
     <Container>
       <Wrapper>
+        <Link
+          to="/"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            display: "block",
+          }}
+        >
+          <Logo>
+            <Img src={ComfortTube} />
+            ComfortTube
+          </Logo>
+        </Link>
         {/* <Button>Register</Button> */}
         {currentUser ? (
           <>

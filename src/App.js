@@ -51,7 +51,7 @@ function App() {
   return (
     <Container>
       <BrowserRouter>
-        <Menu />
+        {/* <Menu /> */}
         <Main>
           <Navbar removeCookie={removeCookie} />
           <Wrapper>
