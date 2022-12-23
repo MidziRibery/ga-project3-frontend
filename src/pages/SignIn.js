@@ -185,7 +185,7 @@ const SignIn = ({ setCookie, cookie }) => {
   return (
     <Container>
       <Title>Sign in</Title>
-      <SubTitle>to continue to ComfortTube</SubTitle>
+      <SubTitle>to continue to TranquilTube</SubTitle>
       <ErrorMessage>{loginErrorMessage}</ErrorMessage>
       <Form onSubmit={handleLogin}>
         {loginInputs.map((input) => (

@@ -126,7 +126,7 @@ export const Navbar = ({ removeCookie }) => {
         >
           <Logo>
             <Img src={ComfortTube} />
-            ComfortTube
+            TranquilTube
           </Logo>
         </Link>
         {/* <Button>Register</Button> */}
@@ -139,18 +139,15 @@ export const Navbar = ({ removeCookie }) => {
               src={currentUser.image ? currentUser.image : defaultProfileImg}
             />
             <DropdownMenu menuExpanded={menuExpanded}>
-            <Link
-                      to="/"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                      >
-              <User>
-                <Avatar
-                  src={
-                    currentUser.image ? currentUser.image : defaultProfileImg
-                  }
-                />
-                {currentUser.name}
-              </User>
+              <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                <User>
+                  <Avatar
+                    src={
+                      currentUser.image ? currentUser.image : defaultProfileImg
+                    }
+                  />
+                  {currentUser.name}
+                </User>
               </Link>
               <ul style={{ paddingLeft: "0", marginBlock: "5px" }}>
                 <MenuItem>

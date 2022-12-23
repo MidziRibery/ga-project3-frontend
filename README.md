@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# Tranquil Tube
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a MERN stack web application created for General Assembly’s Software Engineering Immersive Program. This is the frontend repository of the application. The backend repository can be found [here](https://github.com/charmainelhm/ga-project3-backend).
 
-## Available Scripts
+Tranquil Tube is a video platform specifically created to help user relief stress. The unique thing about this application is that there is no search function at all. When a user first accesses the site, a video meant to relieve stress will be automatically displayed on the page. Users can choose to watch another video by clicking on the “Play next video” button and another video will be displayed on the page. A logged in user can also save videos to his/her playlist so that they can go back to them in the future. They can also leave a comment about a video under the comment section provided.
 
-In the project directory, you can run:
+### Technical Used
 
-### `npm start`
+These are the cool friends that helped made my application possible
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Frontend:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [React](https://reactjs.org/)
+- [React Router](https://reactrouter.com/en/main)
+- [Styled Components](https://styled-components.com/)
+- [Material UI Icons](https://mui.com/material-ui/material-icons/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Axios](https://axios-http.com/)
 
-### `npm test`
+Backend:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Node.js](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [JWT Token](https://jwt.io/)
 
-### `npm run build`
+Databse:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [MongoDB](https://www.mongodb.com/home)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation Instructions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+All the necessary libraries needed for the web application to run are found in the package.json file provided. Install them using <code>npm install</code> if you are using node package manager.
 
-### `npm run eject`
+If you wish to run the backend server with your own database, you will need to link your database to the server for it to run properly.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Development Process
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### User Stories
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Firstly, the important features of the web application were determined having these user stories in mind:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    User Story 1: As someone who is stressed out I want to have a quick and easy way to relief stress so that I can recharge and get back to work with a clearer mind.
+    User Story 2: As an admin of the application, I want to make changes to the database so that the application can continue to provide relevant content to the users.
 
-## Learn More
+From there, these are some of the main features that our web application should have:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Randomised stress relief video, so that users do not have to decide what they have to watch
+- Function to allow users to save videos they like
+- Admin dashboard for admins to have control of the application
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Wireframes
 
-### Code Splitting
+Simple wireframes were then developed to accommodate to all the features the application should have:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![Main Page Wireframe](./assets/tranquiltube_wireframe_main.png)
 
-### Analyzing the Bundle Size
+![Playlist Wireframe](./assets/tranquiltube_wireframe_playlist.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Admin Dashboard Wireframe](./assets/tranquiltube_wireframe_admin.png)
 
-### Making a Progressive Web App
+### Server Routes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+A backend server was created to help with authenticating users and send the web application video data required for the video to be displayed properly on the application. With the main features in mind, below are routes we came up with for the server:
 
-### Advanced Configuration
+![Server Routes](./assets/api_routes.jpg)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Problems Encountered
 
-### Deployment
+- Sending cookie to deployed server for authentication
+  - The original plan was for cookies sent in the request header to server routes that require authentication. While it worked when we were testing it with the server running locally on our computer, we were unable to send the cookies to the deployed server. Despite looking up online and consulting our instructor for possible cause of the issue, we were unable to determine why the phenomenon was happening.
+  - With the help of our instructor, we altered the request header so that we are sending the JWT token directly in the header rather than relying on the cookie to send over the token, which helped solve the authentication issue.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Future Development
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Allow registered user to upload their own stress relief videos onto the platform
+- Like/Dislike Functionality
+  - Display videos base on the popularity of the videos
+- More functions on the admin dashboard
+  - Allow admin to make changes to the video, not just deleting them
