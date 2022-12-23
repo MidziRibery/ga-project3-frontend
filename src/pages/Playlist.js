@@ -8,11 +8,18 @@ import { updateUserPlaylist } from "../redux/userSlice";
 import axios from "axios";
 
 const Container = styled.div`
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  width: 80%;
+  margin-inline: auto;
 `;
+
+// const Container = styled.div`
+//   display: flex;
+//   gap: 20px;
+//   flex-wrap: wrap;
+//   justify-content: center;
+// `;
 
 const Playlist = ({ cookies }) => {
   const navigate = useNavigate();
