@@ -104,7 +104,7 @@ export const Navbar = ({ removeCookie }) => {
     });
     dispatch(logout());
     setMenuExpanded(false);
-    if (path === "admin") {
+    if (path === "admin" || path === "playlist") {
       navigate("/");
     }
   };
@@ -150,9 +150,9 @@ export const Navbar = ({ removeCookie }) => {
               <ul style={{ paddingLeft: "0", marginBlock: "5px" }}>
                 <MenuItem>
                   <Link
-                      to="playlist"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                      >
+                    to="playlist"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
                     My Playlist
                   </Link>
                 </MenuItem>
