@@ -10,13 +10,14 @@ const Container = styled.div`
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const AdminDashboard = ({ cookies }) => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [videos, setVideos] = useState([]);
-  
+
   // function passed to card component in order to remove video
   const handleRemoveVideo = async (videoId) => {
     try {

@@ -9,10 +9,6 @@ import axios from "axios";
 import { fetchSuccess, fetchStart } from "../redux/videoSlice";
 import { updateUserPlaylist } from "../redux/userSlice";
 import { API_URL } from "../api-util";
-// import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-// import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
-// import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-// import Card from "../components/Card";
 
 const Container = styled.div`
   display: flex;
@@ -55,10 +51,6 @@ const Hr = styled.hr`
     border: 0.5px solid black
 `;
 
-// const Recommendation = styled.div`
-//   flex: 2;
-// `;
-
 const Channel = styled.div`
   display: flex;
   justify-content: space-between;
@@ -69,12 +61,6 @@ const ChannelInfo = styled.div`
   gap: 20px;
 `;
 
-// const Image = styled.img`
-//   height: 50px;
-//   width: 50px;
-//   border-radius: 50%;
-// `;
-
 const ChannelDetail = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,26 +70,9 @@ const ChannelName = styled.span`
   font-weight: 500;
 `;
 
-// const ChannelCounter = styled.span`
-//   margin-top: 5px;
-//   margin-bottom: 20px;
-//   font-size: 12px;
-// `;
-
 const Description = styled.p`
   font-size: 14px;
 `;
-
-// const Subscribe = styled.button`
-//   background-color: #cc1a00;
-//   color: white;
-//   font-weight: 500;
-//   border: none;
-//   border-radius: 3px;
-//   height: max-content;
-//   cursor: pointer;
-//   padding: 10px 20px;
-// `;
 
 const Video = ({ cookies }) => {
   const { currentVideo, loading } = useSelector((state) => state.video);
@@ -172,16 +141,6 @@ const Video = ({ cookies }) => {
           <Title>{currentVideo.title}</Title>
           <Details>
             <Buttons>
-              {/* <Button>
-              <ThumbUpOutlinedIcon />
-              123
-            </Button>
-            <Button>
-              <ThumbDownOffAltOutlinedIcon /> Dislike
-            </Button>
-            <Button>
-              <ReplyOutlinedIcon /> Share
-            </Button> */}
               {currentUser ? (
                 <Button
                   onClick={saveVideo}
@@ -205,14 +164,11 @@ const Video = ({ cookies }) => {
           <Hr />
           <Channel>
             <ChannelInfo>
-              {/* <Image src="https://www.hepper.com/wp-content/uploads/2018/03/howtokeepcatsfromscratchingfurniture_article_content3_031918-2.jpg" /> */}
               <ChannelDetail>
                 <ChannelName>{currentVideo.creator}</ChannelName>
-                {/* <ChannelCounter>300K subscribers</ChannelCounter> */}
                 <Description>{currentVideo.description}</Description>
               </ChannelDetail>
             </ChannelInfo>
-            {/* <Subscribe>SUBSCRIBE</Subscribe> */}
           </Channel>
           <Hr />
           <Comments videoId={currentVideo._id} cookies={cookies} />
@@ -220,11 +176,6 @@ const Video = ({ cookies }) => {
       ) : (
         ""
       )}
-      {/* <Recommendation>
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-      </Recommendation> */}
     </Container>
   );
 };
