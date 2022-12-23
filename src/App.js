@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import Menu from "./components/Menu";
 import { Navbar } from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./redux/userSlice";
 import { API_URL } from "./api-util";
-// import Home from "./pages/Home";
 import AdminDashboard from "./pages/AdminDashboard";
 import SignIn from "./pages/SignIn";
 import Video from "./pages/Video";
@@ -53,14 +50,12 @@ function App() {
   return (
     <Container>
       <BrowserRouter>
-        {/* <Menu /> */}
         <Main>
           <Navbar removeCookie={removeCookie} />
           <Wrapper>
             <Routes>
               <Route path="/">
                 <Route index element={<Navigate to="video/random" />} />
-                {/* <Route index element={<Home />} /> */}
                 <Route
                   path="signin"
                   element={<SignIn setCookie={setCookie} cookies={cookies} />}
