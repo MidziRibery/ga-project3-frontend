@@ -139,6 +139,10 @@ export const Navbar = ({ removeCookie }) => {
               src={currentUser.image ? currentUser.image : defaultProfileImg}
             />
             <DropdownMenu menuExpanded={menuExpanded}>
+            <Link
+                      to="/"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                      >
               <User>
                 <Avatar
                   src={
@@ -147,6 +151,7 @@ export const Navbar = ({ removeCookie }) => {
                 />
                 {currentUser.name}
               </User>
+              </Link>
               <ul style={{ paddingLeft: "0", marginBlock: "5px" }}>
                 <MenuItem>
                   <Link

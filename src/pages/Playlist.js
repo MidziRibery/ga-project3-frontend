@@ -18,21 +18,21 @@ const Playlist = ({ cookies }) => {
   const [videos, setVideos] = useState([]);
 
   // function passed to card component in order to remove video
-  // const handleRemoveVideo = async (videoId) => {
-  //   try {
-  //     const res = await axios.delete(`${API_URL}videos/${videoId}`, {
-  //       headers: { access_token: cookies.access_token },
-  //     });
-  //     if (res.data) {
-  //       console.log(res.data);
-  //       // removes deleted video from "videos" array - updates component to remove delete video from page
-  //       const updatedVideoArr = videos.filter((video) => video._id !== videoId);
-  //       setVideos(updatedVideoArr);
-  //     }
-  //   } catch (err) {
-  //     console.log(err.response.data);
-  //   }
-  // };
+  const handleRemoveVideo = async (videoId) => {
+    try {
+      const res = await axios.delete(`${API_URL}videos/${videoId}`, {
+        headers: { access_token: cookies.access_token },
+      });
+      if (res.data) {
+        console.log(res.data);
+        // removes deleted video from "videos" array - updates component to remove delete video from page
+        const updatedVideoArr = videos.filter((video) => video._id !== videoId);
+        setVideos(updatedVideoArr);
+      }
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
   console.log(currentUser._id)
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Playlist = ({ cookies }) => {
       <Card
         key={video._id}
         video={video}
-
+        handleRemoveVideo={handleRemoveVideo}
       /> // handleRemoveVideo function passed to child component to be used
     );
   });

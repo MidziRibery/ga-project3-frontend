@@ -69,11 +69,11 @@ export const Menu = () => {
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
             <Img src={ComfortTube} />
-            ComfortTube
+            TranquilTube
           </Logo>
         </Link>
             <Item>
-            <Link to="playlist" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <HomeIcon/>
                 Home
             </Link>
