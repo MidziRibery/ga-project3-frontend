@@ -15,10 +15,9 @@ const Container = styled.div`
   width: 50%;
   margin-inline: auto;
   gap: 24px;
+  justify-content: center;
 `;
-const Content = styled.div`
-  flex: 5;
-`;
+const Content = styled.div``;
 
 const VideoWrapper = styled.div``;
 

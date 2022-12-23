@@ -15,6 +15,12 @@ const NewComment = styled.form`
   gap: 10px;
 `;
 
+const NoComment = styled.div`
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 500;
+`;
+
 const Avatar = styled.img`
   height: 50px;
   width: 50px;
@@ -86,7 +92,13 @@ const Comments = ({ videoId, cookies }) => {
           placeholder="Add a comment"
         ></Input>
       </NewComment>
-      {comments.length === 0 ? "No comments yet" : commentArr}
+      {comments.length === 0 ? (
+        <NoComment>
+          No comments yet, be the first user to comment on this video!
+        </NoComment>
+      ) : (
+        commentArr
+      )}
     </Container>
   );
 };

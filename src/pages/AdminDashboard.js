@@ -7,11 +7,17 @@ import { API_URL } from "../api-util";
 import axios from "axios";
 
 const Container = styled.div`
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  width: 80%;
+  margin-inline: auto;
 `;
+// const Container = styled.div`
+//   display: flex;
+//   gap: 20px;
+//   flex-wrap: wrap;
+//   justify-content: center;
+// `;
 
 const AdminDashboard = ({ cookies }) => {
   const navigate = useNavigate();
