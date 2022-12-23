@@ -131,7 +131,7 @@ const Video = ({ cookies }) => {
             <iframe
               width="854"
               height="480"
-              src={`https://www.youtube.com/embed/${currentVideo.youtubeId}`}
+              src={`https://www.youtube.com/embed/${currentVideo.youtubeId}?&autoplay=1`}
               title="YouTube Video Player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
